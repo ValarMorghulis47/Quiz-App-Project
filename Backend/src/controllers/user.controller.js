@@ -64,7 +64,7 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(error.statusCode).json(error.toResponse());
     }
     const { JWTToken } = await generateTokens(user._id);
-    const loggedinuser = await User.findById(user._id).select("-password -role");
+    const loggedinuser = await User.findById(user._id).select("-password");
     const options = {
         // httpOnly: true,
         path: '/',

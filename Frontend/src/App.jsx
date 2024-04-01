@@ -8,12 +8,14 @@ import AdminPanel from './pages/adminpanel';
 import ErrorPage from './pages/ErrorPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setInitialFetchDone, signInFailure, signInStart, signInSuccess } from './store/userSlice';
+import { setInitialFetchDone, signInFailure, signInStart, signInSuccess, toggleLoggedIn } from './store/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   const dispatch = useDispatch()
   const { LoggedIn } = useSelector((state) => state.user);
+  console.log(LoggedIn);
   const fetchCurrentUser = async () => {
     try {
       dispatch(signInStart());
@@ -24,6 +26,7 @@ function App() {
       if (response.ok) {
         const userData = await response.json();
         dispatch(signInSuccess(userData.data));
+        dispatch(toggleLoggedIn());
       } else {
         dispatch(signInFailure());
       }
@@ -35,7 +38,9 @@ function App() {
     }
   };
   useEffect(() => {
-    fetchCurrentUser();
+    if (LoggedIn === false) {
+      fetchCurrentUser();
+    }
   }, [LoggedIn, dispatch]);
 
   return (
@@ -43,11 +48,15 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/quiz' element={<Quiz />}></Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path='/quiz' element={<Quiz />}></Route>
+          </Route>
           <Route path='/signup' element={<SignUp />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/' element={<Home />}></Route>
+          <Route element={<ProtectedRoute isAdminRoute={true}/>}>
           <Route path='/admin' element={<AdminPanel />}></Route>
+          </Route>
           <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
       </BrowserRouter>

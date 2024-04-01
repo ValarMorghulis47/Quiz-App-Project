@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../CSS/login.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInFailure, signInStart, signInSuccess, toggleLoggedIn } from '../store/userSlice';
+import { signInFailure, signInStart, signInSuccess, toggleAdmin, toggleLoggedIn } from '../store/userSlice';
 import { useToast} from '../hooks/Toast'
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -38,11 +38,18 @@ const Login = () => {
                 showToast(data.error.message, 'error');
                 return;
             }
+            setEmail('');
+            setPassword('');
             showToast('Logged In Successfully. Welcome Back!', 'success');
             dispatch(signInSuccess(data.data.user));
             dispatch(toggleLoggedIn());
-            setEmail('');
-            setPassword('');
+            console.log(data.data.user);
+            if (data.data.user.role === 'admin') {
+                dispatch(toggleAdmin());
+                navigate('/admin');
+            }else{
+            navigate('/');
+            }
         } catch (error) {
             showToast(error.message, 'error');
             dispatch(signInFailure());

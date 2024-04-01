@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   initialFetchDone: false,
   LoggedIn: false,
+  IsAdmin: false,
 };
 
 const userSlice = createSlice({
@@ -13,6 +14,10 @@ const userSlice = createSlice({
   reducers: {
     toggleLoggedIn: (state) => {
       state.LoggedIn = !state.LoggedIn;
+    },
+    toggleAdmin: (state) => {
+      state.IsAdmin = !state.IsAdmin;
+      console.log("i have been toggled");
     },
     setInitialFetchDone: (state) => {
       state.initialFetchDone = true;
@@ -27,28 +32,14 @@ const userSlice = createSlice({
     signInFailure: (state, action) => {
       state.loading = false;
     },
-    updateUserStart: (state) => {
-      state.loading = true;
-    },
-    updateUserSuccess: (state, action) => {
-      state.currentUser = action.payload;
-      state.loading = false;
-      state.error = null;
-    },
-    updateUserFailure: (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
-    },
     deleteUserStart: (state) => {
       state.loading = true;
     },
     deleteUserSuccess: (state) => {
       state.currentUser = null;
       state.loading = false;
-      state.error = null;
     },
     deleteUserFailure: (state, action) => {
-      state.error = action.payload;
       state.loading = false;
     },
     signOutUserStart: (state) => {
@@ -57,10 +48,8 @@ const userSlice = createSlice({
     signOutUserSuccess: (state) => {
       state.currentUser = null;
       state.loading = false;
-      state.error = null;
     },
     signOutUserFailure: (state, action) => {
-      state.error = action.payload;
       state.loading = false;
     },
   },
@@ -85,6 +74,7 @@ export const {
   signOutUserFailure,
   signOutUserSuccess,
   signOutUserStart,
+  toggleAdmin
 } = userSlice.actions;
 
 export default userSlice.reducer;
