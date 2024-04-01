@@ -235,9 +235,14 @@ const deleteUserAccount = asyncHandler(async (req, res) => {
 //Admin Controllers
 const getAllUsers = asyncHandler(async (req, res) => {
     const users = await User.find({role: "user"}).select("-password");
-    if (!users?.length) {
+    if (!users) {
         const error = new ApiError(404, "No Users Found");
         return res.status(error.statusCode).json(error.toResponse());
+    }
+    if (!users.length) {
+        return res.status(200).json(
+            new ApiResponse(200, users, "All Users Retrieved Successfully")
+        )
     }
     return res.status(200).json(
         new ApiResponse(200, users, "All Users Retrieved Successfully")

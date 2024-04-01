@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../CSS/SignUp.css";
 import { Link } from 'react-router-dom';
 import { useToast} from '../hooks/Toast'
-
+import { useSelector } from 'react-redux';
 const SignUp = () => {
 
   const [username, setUsername] = useState("");
@@ -11,7 +11,7 @@ const SignUp = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const showToast = useToast();
-
+  const {currentUser} = useSelector((state) => state.user);
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -54,7 +54,7 @@ const SignUp = () => {
     <>
       <div className="formbody">
         <div className="form-container">
-          <p className="title">Signup</p>
+          {currentUser?.role === 'admin' ? (<p className="title">Add A User</p>): (<p className="title">Signup</p>)}
           <form className="form">
             <div className="input-group">
               <label htmlFor="Username">Username</label>

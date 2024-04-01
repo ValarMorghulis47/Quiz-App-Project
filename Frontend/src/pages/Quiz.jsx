@@ -36,6 +36,26 @@ const Quiz = () => {
     setQuestion(data[indexedDB]);
   }, [indexedDB]);
 
+  useEffect(() => {
+    if (result) {
+      // Replace with your actual API endpoint
+      fetch(`${import.meta.env.VITE_BASE_URI}/api/v1/users/update-score`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ score }),
+      })
+        .then(response => response.json())
+        .then(data => {
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  }, [result, score]);
+
   const shuffleQuestions = () => {
     for (let i = data.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

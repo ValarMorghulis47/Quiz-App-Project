@@ -43,7 +43,6 @@ const Login = () => {
             showToast('Logged In Successfully. Welcome Back!', 'success');
             dispatch(signInSuccess(data.data.user));
             dispatch(toggleLoggedIn());
-            console.log(data.data.user);
             if (data.data.user.role === 'admin') {
                 dispatch(toggleAdmin());
                 navigate('/admin');

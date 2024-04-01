@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function ProtectedRoute({ isAdminRoute = false }) {
-  const { currentUser, loading, initialFetchDone, IsAdmin } = useSelector((state) => state.user);
+  const { currentUser, loading, initialFetchDone} = useSelector((state) => state.user);
   
   if (!initialFetchDone) {
     return null;
@@ -12,8 +12,8 @@ function ProtectedRoute({ isAdminRoute = false }) {
     return <Navigate to="/login" />;
   }
 
-  if (isAdminRoute && !IsAdmin) {
-    return <Navigate to="/not-authorized" />;
+  if (isAdminRoute && !currentUser.role === 'admin') {
+    return <Navigate to="/login" />;
   }
 
   return <Outlet />;
