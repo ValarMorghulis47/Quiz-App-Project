@@ -7,6 +7,8 @@ import image3 from '../photos_questions/1.jpg';
 import image4 from '../photos_questions/images.jpeg';
 import image5 from '../photos_questions/project.jpg';
 import image6 from '../photos_questions/3.webp';
+import Pass from '../components/Pass';
+import Fail from '../components/Fail';
 
 const Quiz = () => {
   const [indexedDB, setIndexedDB] = useState(0);
@@ -23,7 +25,7 @@ const Quiz = () => {
   const option4 = useRef(null);
 
   const optionArray = [option1, option2, option3, option4];
-  const imageList = [image1, image2, image3, image4, image5, image6]; 
+  const imageList = [image1, image2, image3, image4, image5, image6];
 
   useEffect(() => {
     shuffleQuestions();
@@ -46,13 +48,14 @@ const Quiz = () => {
       if (question.ans === ans) {
         e.target.classList.add('correct');
         setLock(true);
-        setScore((prev) => prev + 1);
+        setScore((prev) => prev + 10);
       } else {
         e.target.classList.add('wrong');
         setLock(true);
         optionArray[question.ans - 1].current.classList.add('correct');
       }
       e.target.classList.add('selected');
+      setSelected(true);
     }
   };
 
@@ -78,26 +81,29 @@ const Quiz = () => {
     setScore(0);
     setResult(false);
     setSelected(false);
+    setLock(false);
     shuffleQuestions();
     setContainerImageIndex(0);
   };
 
   return (
     <div className='quizblock'>
-      <div className="container1" style={{position: 'relative'}}>
-        <div style={{backgroundImage: `url(${imageList[containerImageIndex]})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: '0.4', pointerEvents: 'none'}}></div>
+      <div className="container1" style={{ position: 'relative' }}>
+        <div style={{ backgroundImage: `url(${imageList[containerImageIndex]})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: '0.4', pointerEvents: 'none' }}></div>
         <div>
           <h1>Quiz</h1>
           <hr />
           {result ? (
             <>
               <h2>
-                You scored {score} out of {data.length}
+                You scored {score} out of {data.length * 10}
               </h2>
 
               <div onClick={reset} className="btn">
                 Reset
               </div>
+              {score > 40 && <Pass />}
+              {score <= 40 && <Fail />}
             </>
           ) : (
             <>
@@ -124,7 +130,7 @@ const Quiz = () => {
                   </li>
                 </ul>
               </div>
-              <div onClick={next} className="btn">
+              <div onClick={selected ? next : null} className={selected ? "btn" : "btn disabled"}>
                 Next
               </div>
               <div className="index">
