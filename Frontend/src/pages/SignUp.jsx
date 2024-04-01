@@ -34,7 +34,6 @@ const SignUp = () => {
         }),
       });
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         setLoading(false);
         showToast(data.error.message, 'error');

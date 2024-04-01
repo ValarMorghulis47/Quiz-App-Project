@@ -53,14 +53,6 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    if ([email, password].some((field) => field?.trim() === "")) {
-        const error = new ApiError(400, "All Fields Are Required");
-        return res.status(error.statusCode).json(error.toResponse());
-    }
-    if (!email) {
-        const error = new ApiError(400, "Email is required");
-        return res.status(error.statusCode).json(error.toResponse());
-    }
     const user = await User.findOne({ email })
     if (!user) {
         const error = new ApiError(408, "Invalid Email Or Password");
