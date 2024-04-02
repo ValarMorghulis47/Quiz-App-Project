@@ -27,7 +27,7 @@ const Home = () => {
                   </h4>
                 </div>
                 <h1 className="mb-8 text-4xl font-extrabold leading-tight lg:text-6xl text-dark-grey-900">
-                  Welcome to Navyship
+                  Welcome to Maritime Cyber Range
                 </h1>
                 <p className="mb-6 text-base font-normal leading-4  lg:w-3/4 text-grey-900 text-left texttoleft">
                   Welcome aboard to <b>'Nautical Navigators'</b>, where the sea meets the mind in an adventurous journey of knowledge! Set sail on a quest to test your wits and wisdom about all things maritime. From the legendary voyages of historical explorers to the intricate workings of modern naval technology,our quiz app plunges you into the depths of naval history, culture, and innovation.Whether you're a seasoned seafarer or a landlubber curious to explore the vast blue horizon,prepare to embark on a thrilling voyage of discovery. Hoist the sails, weigh anchor,and let the quizzing adventure begin!

@@ -74,8 +74,8 @@ const Navbar = () => {
                     {!LoggedIn && <Link to="/signup" className="flex items-center px-4 py-2 text-sm font-bold rounded-xl  transition duration-300 topsign">
                         SignUp  <SiGnuprivacyguard />
                     </Link>}
-                    {LoggedIn && <button onClick={navigateAdmin} className="flex items-center px-4 py-2 text-sm font-bold rounded-xl  transition duration-300 topsign cursor-pointer">
-                        {currentUser.username}
+                    {LoggedIn && currentUser.role === 'admin' && <button onClick={navigateAdmin} className="flex items-center px-4 py-2 text-sm font-bold rounded-xl  transition duration-300 topsign cursor-pointer">
+                        Admin
                     </button>}
                     {LoggedIn && <button onClick={handleClick} className="flex items-center px-4 py-2 text-sm font-bold rounded-xl  transition duration-300 topsign cursor-pointer">
                         Logout  <SiGnuprivacyguard />
